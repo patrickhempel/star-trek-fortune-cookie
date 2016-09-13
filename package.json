@@ -1,0 +1,20 @@
+{
+  "name": "star_trek_fortune_cookie",
+  "version": "0.0.1",
+  "description": "A simple slack app for getting an random star trek episode",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Hempel <patrick@hempl.io>",
+  "license": "MIT",
+  "dependencies": {
+    "Q": "0.0.1",
+    "express": "^4.14.0",
+    "express-cors": "0.0.3",
+    "lodash": "^4.15.0",
+    "q": "^1.4.1",
+    "request": "^2.74.0"
+  }
+}
