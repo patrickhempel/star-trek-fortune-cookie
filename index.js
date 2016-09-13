@@ -38,7 +38,15 @@ const startApp = () => {
     }));
 
     app.get( '/random', (req, res, next) => {
-        let item = data.all[Math.floor(Math.random()*data.all.length)];
+        let series = data.all;
+
+
+        if( req.query.text && data[ req.query.text]) {
+            series = data[req.query.text];
+        }
+
+        let item = series[Math.floor(Math.random()*series.length)];
+
         let response = {
             "attachments": []
         };
