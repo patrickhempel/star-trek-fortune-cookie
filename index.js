@@ -40,17 +40,24 @@ const startApp = () => {
     app.get( '/random', (req, res, next) => {
         let item = data.all[Math.floor(Math.random()*data.all.length)];
         let response = {
-            "text": "",
             "attachments": []
         };
+        let fullUrl = '';
 
         fetchUrl( item.pageid)
-            .then( ( fullUrl) => {
-                response.text = `${item.title} ${fullUrl}`;
+            .then( ( url) => {
+                fullUrl = url;
                 return fetchSummary( item);
             })
             .then( ( summary) => {
-                response.attachments.push({ "text": summary.extract});
+                response.attachments.push({
+                    "title": item.title,
+                    "title_link": fullUrl,
+                    "text": summary.extract,
+                    "footer": "Wikipedia",
+                    "ts": Date.now(),
+                    "footer_icon": 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/200px-Wikipedia%27s_W.svg.png'
+                });
                 return res.send( response);
             });
 
