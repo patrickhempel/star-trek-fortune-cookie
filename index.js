@@ -49,6 +49,7 @@ const startApp = () => {
         let item = series[Math.floor(Math.random()*series.length)];
 
         let response = {
+            "response_type": "in_channel",
             "attachments": []
         };
         let fullUrl = '';
