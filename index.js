@@ -8,6 +8,7 @@ const Q         = require('q');
 
 const data = {
     'tos': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Original_Series_episodes&cmlimit=500&format=json',
+    'ani': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Animated_Series_episodes&cmlimit=500&format=json',
     'tng': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Next_Generation_episodes&cmlimit=500&format=json',
     'dsn': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Deep_Space_Nine_episodes&cmlimit=500&format=json',
     'voy': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Voyager_episodes&cmlimit=500&format=json',
