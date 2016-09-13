@@ -39,18 +39,18 @@ const startApp = () => {
 
     app.get( '/random', (req, res, next) => {
         let item = data.all[Math.floor(Math.random()*data.all.length)];
+        let response = {
+            "text": "",
+            "attachments": []
+        };
 
         fetchUrl( item.pageid)
             .then( ( fullUrl) => {
-                let response = {
-                    "text": item.title,
-                    "attachments": [
-                        {
-                            "text": fullUrl
-                        }
-                    ]
-                };
-
+                response.text = `${item.title} ${fullUrl}`;
+                return fetchSummary( item);
+            })
+            .then( ( summary) => {
+                response.attachments.push({ "text": summary.extract});
                 return res.send( response);
             });
 
@@ -61,6 +61,20 @@ const startApp = () => {
     app.listen(3000, function() {
         console.log('Example app listening on port 3000!');
     });
+};
+
+const fetchSummary = (item) => {
+    let defer = Q.defer();
+
+    request(
+        `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=${item.title}`,
+        (err, response, body) => {
+            let data = JSON.parse(body);
+            defer.resolve(data.query.pages[item.pageid]);
+        }
+    );
+
+    return defer.promise;
 };
 
 const fetchUrl = pageid => {
