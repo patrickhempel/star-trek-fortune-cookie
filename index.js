@@ -4,7 +4,7 @@ const app       = express();
 const cors      = require('express-cors');
 const request   = require('request');
 const _         = require('lodash');
-const Q         = require('Q');
+const Q         = require('q');
 
 const data = {
     'tos': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Original_Series_episodes&cmlimit=500&format=json',
@@ -40,11 +40,21 @@ const startApp = () => {
     app.get( '/random', (req, res, next) => {
         let item = data.all[Math.floor(Math.random()*data.all.length)];
 
-        let response = {
-            "text": item.title
-        };
+        fetchUrl( item.pageid)
+            .then( ( fullUrl) => {
+                let response = {
+                    "text": item.title,
+                    "attachments": [
+                        {
+                            "text": fullUrl
+                        }
+                    ]
+                };
 
-        return res.send( response);
+                return res.send( response);
+            });
+
+
     });
 
 
@@ -54,13 +64,16 @@ const startApp = () => {
 };
 
 const fetchUrl = pageid => {
+    let defer = Q.defer();
     request(
         `https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=${pageid}&inprop=url&format=json`,
         (err, response, body) => {
             let data = JSON.parse( body);
-            console.log( data.query.pages[pageid].fullurl);
+            defer.resolve(data.query.pages[pageid].fullurl);
         }
-    )
+    );
+
+    return defer.promise;
 };
 
 
