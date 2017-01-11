@@ -12,7 +12,8 @@ const data = {
     'tng': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Next_Generation_episodes&cmlimit=500&format=json',
     'dsn': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Deep_Space_Nine_episodes&cmlimit=500&format=json',
     'voy': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Voyager_episodes&cmlimit=500&format=json',
-    'ent': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Enterprise_episodes&cmlimit=500&format=json'
+    'ent': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_Enterprise_episodes&cmlimit=500&format=json',
+    'tas': 'https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Star_Trek:_The_Animated_Series_episodes&cmlimit=500&format=json',
 };
 
 const startUpPromises = [];
@@ -94,7 +95,7 @@ const fetchSummary = (item) => {
     return defer.promise;
 };
 
-const fetchUrl = pageid => {
+const fetchUrl = (pageid) => {
     let defer = Q.defer();
     request(
         `https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=${pageid}&inprop=url&format=json`,
@@ -110,7 +111,7 @@ const fetchUrl = pageid => {
 
 Q.all( startUpPromises)
     .then( () => {
-        let defer = Q.defer();
+        let defer =     Q.defer();
 
         data['all'] = _.reduce( data, (m, i) => m.concat(i));
 
